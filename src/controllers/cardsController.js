@@ -11,7 +11,15 @@ const createCard = async (request, response) => {
     return response.status(201).json(createdCards)
 }
 
+const deleteCards = async (request,response) => {
+    const {id} = request.params
+    await cardModel.deleteCard(id)
+
+    return response.status(201).json()
+}
+
 module.exports = {
     createCard,
-    getAll
+    getAll,
+    deleteCards
 }

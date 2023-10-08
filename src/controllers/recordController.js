@@ -1,9 +1,15 @@
-const cardModel = require('../models/cardsModels')
+const recordModel = require('../models/recordModels')
+
+
 const getAll = async (request, response) => {
 
-    const users = await cardModel.getAll()
-   return response.status(200).json(users)
+    const records = await recordModel.getAll()
+
+    if(records === 0) return response.status(404).json({ message: 'Nenhum registro encontrado' });
+   return response.status(200).json(records)
 }
+
+
 
 module.exports = {
     getAll

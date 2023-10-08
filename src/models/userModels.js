@@ -6,8 +6,18 @@ const SECRET = process.env.SECRET
 
 
 const getAll = async () => {
-    const [users, buffer] = await connection.execute("SELECT * FROM  users")
-    return users
+    try {
+        const [getAll] = await connection.execute('SELECT * FROM users');
+        
+        if (getAll.length === 0) {
+            return { message: 'Nenhum Usuário encontrado' };
+        }
+        
+        return getAll;
+    } catch (error) {
+        console.error(error);
+        return { error: 'Erro ao buscar registros' };
+    }
 }
 
 const deleteUser = async (id) => {
@@ -36,7 +46,7 @@ const validUser = async (email, senha) => {
             const passwordMatch = await bcrypt.compare(senha, hashedPassword);
 
             if (passwordMatch) {
-                const token = jwt.sign({id: userLoged[0].id},SECRET, {expiresIn: 60})
+                const token = jwt.sign({id: userLoged[0].id},SECRET, {expiresIn: 600})
                 return {valid: true, message: 'Login efetuado', user: userLoged[0].nome, token: token};
             }
         }

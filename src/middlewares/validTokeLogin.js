@@ -28,7 +28,7 @@ const verifyTokenValid = async (request, response, next) => {
     }catch(err){
         return response.status(400).json({
             erro: true,
-            message: 'Token Inválido!!!'
+            message: 'Token Inválido ou Expirado!!!'
         })
     }
     next()

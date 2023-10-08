@@ -13,20 +13,26 @@ const validToken = require('./middlewares/validTokeLogin')
 const router = express.Router()
 
 
-// Rotas 
+// Rotas Usuarios
 router.get('/', (request,response) =>{
     response.send('O que o Front mandar!!!')
 })
 router.get("/users",validToken.verifyTokenValid,userController.getAll)
-router.post('/users/login', loginValidate.validUser)
+router.post('/login', loginValidate.validUser)
 router.post("/users/register",userValidate.validateValues,validateForEmail.validateForEmail,userController.createUser)
 router.delete("/users/:id", userController.deleteUser)
 router.put("/users/:id",userValidate.validateValues, userController.updateUser)
-router.get("/cards", createCards.getAll)
-router.post("/cards",createCards.createCard)
-router.get('/records', recordCards.getAll)
 router.post('users/logout', (request,response) =>{
     response.end()
 })
+
+// Rotas Cards
+router.get("/cards", createCards.getAll)
+router.post("/cards",createCards.createCard)
+router.delete("/cards/:id",createCards.deleteCards)
+
+// rotas registros
+router.get('/records', recordCards.getAll)
+
 
 module.exports =  router
