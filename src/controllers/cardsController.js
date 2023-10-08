@@ -7,7 +7,8 @@ const getAll = async (request, response) => {
 }
 
 const createCard = async (request, response) => {
-    const createdCards = await cardModel.creatCards(request.body)
+    const userid = request.id
+    const createdCards = await cardModel.creatCards(request.id,request.body)
     return response.status(201).json(createdCards)
 }
 

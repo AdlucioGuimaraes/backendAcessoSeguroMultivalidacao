@@ -9,6 +9,7 @@ const recordCards = require('./controllers/recordController')
 const userValidate = require('./middlewares/userValidate')
 const validateForEmail = require('./middlewares/verifyValidate')
 const validToken = require('./middlewares/validTokeLogin')
+const validCardsValues = require('./middlewares/cardsValidateValues')
 
 const router = express.Router()
 
@@ -28,7 +29,7 @@ router.post('users/logout', (request,response) =>{
 
 // Rotas Cards
 router.get("/cards", createCards.getAll)
-router.post("/cards",createCards.createCard)
+router.post("/cards",validToken.verifyTokenValid,validCardsValues.validateCardsValues,createCards.createCard)
 router.delete("/cards/:id",createCards.deleteCards)
 
 // rotas registros

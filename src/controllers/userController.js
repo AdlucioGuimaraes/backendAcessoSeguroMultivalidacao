@@ -4,7 +4,7 @@ const createUserModel = require('../models/createUserModel')
 const getAll = async (request, response) => {
 
      const users = await userModel.getAll()
-     //console.log(request.id) retorna o id do usuário, será útil futuramente
+     const userid = request.id
     return response.status(200).json(users)
 }
 

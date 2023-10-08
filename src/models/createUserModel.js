@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const connection  = require('./connectionDB')
 
-const createUsers = async (user) => {
+const createUsers = async (id,user) => {
     const { nome, email, senha, tipo, adicional1, adicional2, adicional3, adicional4, adicional5, biometria } = user;
 
     try {

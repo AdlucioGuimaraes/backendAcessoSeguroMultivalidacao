@@ -15,11 +15,22 @@ const getAll = async () =>{
     }
 }
 
-const creatCards = async(card) => {
-    const {usuario_id, acesso_unico, codigo_qr} = card
-    const [createdCards] = await connection.execute('INSERT INTO cards (usuario_id, acesso_unico, codigo_qr, create_at) VALUES (?,?,?,NOW())',[usuario_id, acesso_unico, codigo_qr])
+const creatCards = async(id,card) => {
+    const {acesso_unico, codigo_qr} = card
 
-    return createdCards
+    try{
+        const [createdCards] = await connection.execute('INSERT INTO cards (usuario_id, acesso_unico, codigo_qr, create_at) VALUES (?,?,?,NOW())',[id, acesso_unico, codigo_qr])
+
+        if (createdCards && createdCards.affectedRows === 1) {
+            return { message: 'Cadastrado com sucesso' };
+        } else {
+            return { message: 'Erro ao cadastrar usuário' };
+        }
+
+    }catch(error) {
+        console.error('Erro ao criar Card:', error);
+        throw error; 
+    }
 }
 
 const deleteCard = async (id) => {
