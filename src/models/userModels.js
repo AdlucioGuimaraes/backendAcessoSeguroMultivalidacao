@@ -30,8 +30,9 @@ const updateUser = async (id, user) => {
     const query = 'UPDATE users SET nome = ?, email = ?, senha = ?, tipo = ?,adicional1 = ?, adicional2=? ,adicional3 = ? ,adicional4 = ?,adicional5 = ? WHERE id = ?'
 
     const {nome,email,senha,tipo, adicional1 ,adicional2, adicional3, adicional4, adicional5} = user
+    const hashedPassword = await bcrypt.hash(senha, 10);
 
-    const updatedUser = await connection.execute(query, [nome ,email,senha,tipo, adicional1 ,adicional2, adicional3, adicional4, adicional5,id])
+    const updatedUser = await connection.execute(query, [nome ,email,hashedPassword,tipo, adicional1 ,adicional2, adicional3, adicional4, adicional5,id])
 
     return updatedUser
     

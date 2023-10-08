@@ -1,4 +1,5 @@
 const connection = require('./connectionDB')
+const bcrypt = require('bcrypt');
 
 const getAll = async () =>{
     try {
