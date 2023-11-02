@@ -12,9 +12,11 @@ connection
     .getConnection()
     .then(() => {
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
+        
     })
     .catch((err) => {
         console.error('Erro ao estabelecer a conexão com o banco de dados:', err);
     });
+    
 
 module.exports = connection

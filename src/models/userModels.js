@@ -1,8 +1,7 @@
 const bcrypt = require('bcrypt');
 const connection  = require('./connectionDB')
-const jwt = require('jsonwebtoken')
-require('dotenv').config();
-const SECRET = process.env.SECRET
+const generateToken = require('./generatesToken')
+const typeAcess = require('../useCases/typeAcessUsers')
 
 
 const getAll = async () => {
@@ -20,11 +19,16 @@ const getAll = async () => {
     }
 }
 
+
+
 const deleteUser = async (id) => {
     const query = 'DELETE FROM users WHERE id = ?'
     const deletedUser = await connection.execute(query,[id])
     return deletedUser
 }
+
+
+
 
 const updateUser = async (id, user) => {
     const query = 'UPDATE users SET nome = ?, email = ?, senha = ?, tipo = ?,adicional1 = ?, adicional2=? ,adicional3 = ? ,adicional4 = ?,adicional5 = ? WHERE id = ?'
@@ -33,10 +37,12 @@ const updateUser = async (id, user) => {
     const hashedPassword = await bcrypt.hash(senha, 10);
 
     const updatedUser = await connection.execute(query, [nome ,email,hashedPassword,tipo, adicional1 ,adicional2, adicional3, adicional4, adicional5,id])
-
     return updatedUser
     
 }
+
+
+
 
 const validUser = async (email, senha) => {
 
@@ -45,10 +51,10 @@ const validUser = async (email, senha) => {
         if (userLoged.length === 1) {
             const hashedPassword = userLoged[0].senha;
             const passwordMatch = await bcrypt.compare(senha, hashedPassword);
-
+            const type = typeAcess.typeAcess(userLoged[0].tipo)
             if (passwordMatch) {
-                const token = jwt.sign({id: userLoged[0].id},SECRET, {expiresIn: 600})
-                return {valid: true, message: 'Login efetuado', user: userLoged[0].nome, token: token};
+                const token = generateToken.generatesToken(userLoged[0].id)
+                return {valid: true, message: 'Login efetuado', user: userLoged[0].nome, tipo: type, token: token};
             }
         }
 
