@@ -29,7 +29,6 @@ const readQR = async (request, response) => {
     const businessBule = await businessBuleQr.businessBuleQr(readerQr)
     return response.status(200).json(businessBule)
 }
-
 module.exports = {
     createCard,
     getAll,

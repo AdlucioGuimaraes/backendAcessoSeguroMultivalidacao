@@ -64,6 +64,7 @@ const readQr = async (id, code) => {
     return readerQr
 }
 
+
 module.exports = {
     creatCards,
     getAll,

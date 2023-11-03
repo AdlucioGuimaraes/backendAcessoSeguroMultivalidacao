@@ -17,8 +17,10 @@ const router = express.Router()
 router.get('/', (request,response) =>{
     response.send('O que o Front mandar!!!')
 })
-router.get("/users",validToken.verifyTokenValid,userController.getAll)
-router.post('/login', loginValidate.validUser)
+router.get("/users",
+    validToken.verifyTokenValid,
+userController.getAll);
+router.post('/login', loginValidate.validUser);
 router.post("/users/register",userValidate.validateValues,validateForEmail.validateForEmail,userController.createUser)
 router.delete("/users/:id", validToken.verifyTokenValid,userController.deleteUser)
 router.put("/users/:id",userValidate.validateValues, validateForEmail.validateForEmailUpdate,userController.updateUser)

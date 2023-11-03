@@ -31,6 +31,7 @@ const updateRecords = async(id, user_id) =>{
     return updateRecord
 }
 
+
 module.exports = {
     getAll,
     createRecords,

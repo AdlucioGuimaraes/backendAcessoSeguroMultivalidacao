@@ -22,4 +22,5 @@ const createUsers = async (user) => {
     }
 };
 
+
 module.exports = {createUsers}
