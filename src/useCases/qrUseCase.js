@@ -11,7 +11,7 @@ const businessBuleQr = async ([request], response) =>{
         return verifyAcess(id,user_id,status)
     }else{
         records.updateRecords(id, user_id)
-        connectMqtt.serverMqtt('open')
+        connectMqtt.serverMqtt('close')
 
         console.log('Porta(Cancela) Aberta')
         return { message: 'Porta(Cancela) Aberta' }

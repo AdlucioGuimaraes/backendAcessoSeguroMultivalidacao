@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const qrCode = async (request,response) => {
   try {
-    const dadosParaQRCode = process.env.Url+'eb47bcd0-7a5b-4be8-9183-71ffa862542c';
+    const dadosParaQRCode = process.env.Url+'9ca09c75-ebfd-4d4f-9ad1-4227e110a4e9';
     const qrcode = await QRCode.toDataURL(dadosParaQRCode);
     
     response.send(`<img src="${qrcode}" alt="QR Code" />`);

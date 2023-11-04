@@ -1,8 +1,8 @@
 const serverMqtt = (listening) =>{
     const mqtt = require('mqtt')
     console.log('Testando...')
-//const host = '172.16.5.37'
-    const host = 'broker.emqx.io'
+    const host = '172.16.5.37'
+    //const host = 'broker.emqx.io'
     const port = '1883'
 
     const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
@@ -20,7 +20,7 @@ const serverMqtt = (listening) =>{
 });
 
 const pubTopic = 'esp32/IoT'
-const subTopic = 'esp32/IoT'
+const subTopic = 'message/send'
 
 client.on('connect', () =>{
     console.log('Mqtt Connected!')
