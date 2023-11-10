@@ -2,9 +2,7 @@ const userModel = require('../models/userModels')
 const createUserModel = require('../models/createUserModel')
 
 const getAll = async (request, response) => {
-
-     const users = await userModel.getAll()
-     const userid = request.id
+    const users = await userModel.getAll()
     return response.status(200).json(users)
 }
 

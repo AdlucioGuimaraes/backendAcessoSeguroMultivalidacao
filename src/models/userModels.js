@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const connection  = require('./connectionDB')
 const generateToken = require('./generatesToken')
-const typeAcess = require('../useCases/typeAcessUsers')
+const typeAcess = require('../useCases/useCasesUsers')
 
 
 const getAll = async () => {
@@ -53,7 +53,7 @@ const validUser = async (email, senha) => {
             const passwordMatch = await bcrypt.compare(senha, hashedPassword);
             const type = typeAcess.typeAcess(userLoged[0].tipo)
             if (passwordMatch) {
-                const token = generateToken.generatesToken(userLoged[0].id)
+                const token = generateToken.generatesToken(userLoged[0].id, userLoged[0].tipo)
                 return {valid: true, message: 'Login efetuado', user: userLoged[0].nome, tipo: type, token: token};
             }
         }
@@ -65,13 +65,11 @@ const validUser = async (email, senha) => {
     }
     
 };
-    
-
 
 
 module.exports = {
     getAll,
     deleteUser,
     updateUser,
-    validUser
+    validUser,
 }

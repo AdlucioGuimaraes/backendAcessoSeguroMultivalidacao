@@ -1,5 +1,4 @@
 const connection  = require('./connectionDB')
-const data_entrada = ""
 const create_at = new Date();
 
 
@@ -18,10 +17,14 @@ const getAll = async (request, response) => {
     }
 }
 
-const createRecords = async (id,user_id) => {
+const createRecords = async (id,user_id, data_entrada) => {
     const createRecord = await connection.execute("INSERT INTO registers(card_id, usuario_id, data_entrada, adicional1,adicional2, adicional3, created_at) VALUES (?,?,?,?,?,?,?)", [id,user_id,data_entrada,'teste', '', '', create_at])
-
     return createRecord
+}
+
+const deleteRecords= async (id) => {
+    const deletedRecord= await connection.execute('DELETE FROM registers WHERE id = ?',[id])
+    return deletedRecord
 }
 
 const updateRecords = async(id, user_id) =>{
@@ -35,5 +38,6 @@ const updateRecords = async(id, user_id) =>{
 module.exports = {
     getAll,
     createRecords,
+    deleteRecords,
     updateRecords
 }

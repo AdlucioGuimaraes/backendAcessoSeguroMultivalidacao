@@ -1,8 +1,8 @@
+require('dotenv').config()
 const serverMqtt = (listening) =>{
     const mqtt = require('mqtt')
     console.log('Testando...')
-    const host = '172.16.5.37'
-    //const host = 'broker.emqx.io'
+    const host = process.env.URL_MQTT
     const port = '1883'
 
     const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
@@ -13,8 +13,8 @@ const serverMqtt = (listening) =>{
         clientId,
         clean: true,
         connectTimeout: 4000,
-        username: 'emqx',
-        password: 'public',
+        username: '',
+        password: '',
         reconnectPeriod: 1000
 
 });

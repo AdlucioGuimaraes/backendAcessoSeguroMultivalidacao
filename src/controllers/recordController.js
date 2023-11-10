@@ -9,8 +9,13 @@ const getAll = async (request, response) => {
    return response.status(200).json(records)
 }
 
-
+const deleteRecords = async (request,response) => {
+    const {id} = request.params
+    await recordModel.deleteRecords(id)
+    return response.status(201).json()
+}
 
 module.exports = {
-    getAll
+    getAll,
+    deleteRecords
 }

@@ -18,7 +18,7 @@ router.get('/', (request,response) =>{
     response.send('O que o Front mandar!!!')
 })
 router.get("/users",validToken.verifyTokenValid,userController.getAll);
-router.post('/login', loginValidate.validUser);
+router.post('/login',loginValidate.validUser);
 router.post("/users/register",userValidate.validateValues,validateForEmail.validateForEmail,userController.createUser)
 router.delete("/users/:id", validToken.verifyTokenValid,userController.deleteUser)
 router.put("/users/:id",userValidate.validateValues, validateForEmail.validateForEmailUpdate,userController.updateUser)
@@ -27,16 +27,15 @@ router.post('users/logout', (request,response) =>{
 })
 
 // Rotas Cards
-router.get('/qrcode',validaQR.qrCode)
+router.get('/generateQr/:id',validaQR.qrCode)
 router.get("/readerQr/:code",createCards.readQR);
-router.post('qrcode/leitor')
-router.post('/')
-router.get("/cards", createCards.getAll)
+router.get("/cards",validToken.verifyTokenValid, createCards.getAll)
 router.post("/cards/register",validToken.verifyTokenValid,validCardsValues.validateCardsValues,createCards.createCard)
-router.delete("/cards/:id",createCards.deleteCards)
+router.delete("/cards/:id",validToken.verifyTokenValid,createCards.deleteCards)
 
 // rotas registros
 router.get('/records', recordCards.getAll)
+router.delete("/records/:id",validToken.verifyTokenValid,recordCards.deleteRecords)
 
 
 module.exports =  router

@@ -23,16 +23,17 @@ const getAll = async () =>{
 
 
 const creatCards = async(id,card) => {
-    const {acesso_unico, status} = card
-
+    const {acesso_unico} = card
+    let status;
+    if(acesso_unico === 1) status = 'Não Utilizado'
+    if(acesso_unico === 0) status = 'Irrestrito'
     try{
         const geraQRCode = await qrCode.qrCode(id,create_at)
-
-        const [createdCards] = await connection.execute('INSERT INTO cards (usuario_id, acesso_unico, codigo_qr, status, create_at) VALUES (?,?,?,?,?)',[id, acesso_unico, geraQRCode,'Não Utilizado', create_at])
+        const [createdCards] = await connection.execute('INSERT INTO cards (usuario_id, acesso_unico, codigo_qr, status, create_at) VALUES (?,?,?,?,?)',[id, acesso_unico, geraQRCode,status, create_at])
         const id_card = createdCards.insertId
         
         if (createdCards && createdCards.affectedRows === 1) {
-            record.createRecords(id_card, id)
+            record.createRecords(id_card, id, '')
             return { id: id_card,id_user: id, qr: geraQRCode, message: 'Card Cadastrado com sucesso' };
 
         } else {
@@ -53,22 +54,29 @@ const deleteCard = async (id) => {
     return deletedCard
 }
 
-const updateCard = async (id) => {
-    const updateCard = await connection.execute('UPDATE cards SET status = ? WHERE id = ? ',['Utilizado',id])
+const updateCard = async (id, status) => {
+    console.log(status)
+    const updateCard = await connection.execute('UPDATE cards SET status = ? WHERE id = ? ',[status,id])
 
     return updateCard
 }
 
-const readQr = async (id, code) => {
-    const [readerQr] = await connection.execute('SELECT * FROM cards WHERE usuario_id = ? AND codigo_qr = ?', [id, code]);
+const readQr = async (code) => {
+    const [readerQr] = await connection.execute('SELECT * FROM cards WHERE codigo_qr = ?', [code]);
     return readerQr
 }
 
+const generateCards = async (id) => {
+    const [generateCard]= await connection.execute('SELECT codigo_qr FROM  cards WHERE id = ?',[id])
+    const code = generateCard[0].codigo_qr
+    return code;
+}
 
 module.exports = {
     creatCards,
     getAll,
     deleteCard,
     updateCard,
-    readQr
+    readQr,
+    generateCards
 }

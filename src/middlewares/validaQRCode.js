@@ -1,9 +1,13 @@
 const QRCode = require('qrcode');
+const generateQr = require('../controllers/cardsController')
 require('dotenv').config()
 
 const qrCode = async (request,response) => {
+  const {id} = request.params;
+  const code = await generateQr.generateCards(id)
+
   try {
-    const dadosParaQRCode = process.env.Url+'9ca09c75-ebfd-4d4f-9ad1-4227e110a4e9';
+    const dadosParaQRCode = process.env.Url+code;
     const qrcode = await QRCode.toDataURL(dadosParaQRCode);
     
     response.send(`<img src="${qrcode}" alt="QR Code" />`);
