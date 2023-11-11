@@ -20,11 +20,57 @@ connection
     });
     
     
-connection.execute('create table if not exists users(id int primary key not null auto_increment, nome varchar(50), email varchar(30), senha varchar(80),tipo int, adicional1 varchar(30),adicional2 varchar(30), adicional3 varchar(30), adicional4 varchar(30), adicional5 varchar(30), biometria int, created_at timestamp);create table if not exists cards (id int primary key not null auto_increment, usuario_id int, acesso_unico int, codigo_qr varchar(150), status varchar(30), create_at timestamp, FOREIGN KEY (usuario_id) REFERENCES users (id));create table if not exists registers (id int primary key not null auto_increment, card_id int, usuario_id int, data_entrada varchar(20), adicional1 varchar(30),adicional2 varchar(30), adicional3 varchar(30), created_at varchar(20),  FOREIGN KEY (card_id) REFERENCES cards(id), FOREIGN KEY (usuario_id) REFERENCES users(id));').then(() => {
-            //console.log('Criada a table Users com sucesso.');
+    const sqlQueries = [
+        `CREATE TABLE IF NOT EXISTS users (
+            id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+            nome VARCHAR(50),
+            email VARCHAR(30),
+            senha VARCHAR(80),
+            tipo INT,
+            adicional1 VARCHAR(30),
+            adicional2 VARCHAR(30),
+            adicional3 VARCHAR(30),
+            adicional4 VARCHAR(30),
+            adicional5 VARCHAR(30),
+            biometria INT,
+            created_at TIMESTAMP
+        )`,
     
-        }).catch((err) => {
-            console.error('Erro ao Criar a tables', err);
-});
+        `CREATE TABLE IF NOT EXISTS cards (
+            id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+            usuario_id INT,
+            acesso_unico INT,
+            codigo_qr VARCHAR(150),
+            status VARCHAR(30),
+            created_at TIMESTAMP,
+            FOREIGN KEY (usuario_id) REFERENCES users (id)
+        )`,
+    
+        `CREATE TABLE IF NOT EXISTS registers (
+            id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+            card_id INT,
+            usuario_id INT,
+            data_entrada VARCHAR(20),
+            adicional1 VARCHAR(30),
+            adicional2 VARCHAR(30),
+            adicional3 VARCHAR(30),
+            created_at VARCHAR(20),
+            FOREIGN KEY (card_id) REFERENCES cards(id),
+            FOREIGN KEY (usuario_id) REFERENCES users(id)
+        )`
+    ];
+    
+    (async () => {
+        for (const query of sqlQueries) {
+            try {
+                await connection.execute(query);
+                //console.log('Tabela criada com sucesso.');
+            } catch (err) {
+                console.error('Erro ao criar a tabela', err);
+            }
+        }
+    })();
+    
+
 
 module.exports = connection
