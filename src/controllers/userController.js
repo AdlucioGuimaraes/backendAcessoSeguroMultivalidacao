@@ -1,9 +1,19 @@
 const userModel = require('../models/userModels')
 const createUserModel = require('../models/createUserModel')
+const cardModel = require('../models/userModels')
+const record = require('../models/recordModels')
+const userUseCase = require('../useCases/useCasesUsers')
 
 const getAll = async (request, response) => {
     const users = await userModel.getAll()
     return response.status(200).json(users)
+}
+
+const getVisits = async(request,response)=> {
+    const users = await userModel.getAll()
+    const records = await record.getAll()
+    const data = await userUseCase.dataVisits(users,records)
+    return response.status(200).json(data)
 }
 
 const createUser = async (request, response) => {
@@ -29,5 +39,6 @@ module.exports = {
     getAll,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    getVisits
 }

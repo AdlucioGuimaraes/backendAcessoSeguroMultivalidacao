@@ -26,33 +26,24 @@ const verifyTokenValid = async (request, response, next) => {
         const decode = await promisify(jwt.verify)(key, SECRET)
         decode.id
         const tipo = decode.tipo
-        if (tipo === 0 && request.url === '/users'){
-            return response.status(422).json({
+        const ACCESS_DENIED_STATUS = 422;
+
+        if (tipo === '') {
+            if (request.url === '/users' || request.url === '/cards') {
+                return response.status(ACCESS_DENIED_STATUS).json({
+                    erro: true,
+                    message: 'Acesso Negado - Usuário Não Autorizado!!!'
+                });
+                }
+
+        if ((request.route.path === '/cards/:id' || request.route.path === '/records/:id') && request.method === 'DELETE') {
+            return response.status(ACCESS_DENIED_STATUS).json({
                 erro: true,
                 message: 'Acesso Negado - Usuário Não Autorizado!!!'
-            })
+            });
         }
-    
-        if (tipo === 0 && request.url === '/cards'){
-            return response.status(422).json({
-                erro: true,
-                message: 'Acesso Negado - Usuário Não Autorizado!!!'
-            })
-        }
-    
-        if (tipo === 0 && request.route.path === '/cards/:id' && request.method === 'DELETE'){
-            return response.status(422).json({
-                erro: true,
-                message: 'Acesso Negado - Usuário Não Autorizado!!!'
-            })
-        }
-    
-        if (tipo === 0 && request.route.path === '/records/:id' && request.method === 'DELETE'){
-            return response.status(422).json({
-                erro: true,
-                message: 'Acesso Negado - Usuário Não Autorizado!!!'
-            })
-        }
+    }
+
         request.id = decode.id
         request.tipo = decode.tipo
     }catch(err){

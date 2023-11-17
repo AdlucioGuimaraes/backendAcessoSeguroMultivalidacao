@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const connection  = require('./connectionDB')
 const generateToken = require('./generatesToken')
+const cardModel = require('../models/cardsModels')
 const typeAcess = require('../useCases/useCasesUsers')
 
 
@@ -19,7 +20,12 @@ const getAll = async () => {
     }
 }
 
+const getVisits  = async () =>{
+    const [visit] = await connection.execute('SELECT * FROM users');
+    const getCards = await cardModel.getAll()
+    return getCards;
 
+}
 
 const deleteUser = async (id) => {
     const query = 'DELETE FROM users WHERE id = ?'
@@ -72,4 +78,5 @@ module.exports = {
     deleteUser,
     updateUser,
     validUser,
+    getVisits
 }

@@ -22,6 +22,7 @@ router.post('/login',loginValidate.validUser);
 router.post("/users/register",userValidate.validateValues,validateForEmail.validateForEmail,userController.createUser)
 router.delete("/users/:id", validToken.verifyTokenValid,userController.deleteUser)
 router.put("/users/:id",userValidate.validateValues, validateForEmail.validateForEmailUpdate,userController.updateUser)
+router.get('/visits', userController.getVisits)
 router.post('users/logout', (request,response) =>{
     response.end()
 })

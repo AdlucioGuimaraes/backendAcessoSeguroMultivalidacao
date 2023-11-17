@@ -21,12 +21,12 @@ const verifyUniqueAccess = (id,user_id,status) => {
         cardModel.updateCard(id,'Utilizado')
         records.updateRecords(id, user_id, newData_entrada)
         console.log('Porta(Cancela) Aberta')
-        return { message: 'Porta(Cancela) Aberta' }
+        return { valid: true }
     }
     if(status === 'Utilizado'){
         connectMqtt.serverMqtt('Acesso Negado!')
         console.log('Acesso Bloqueado: Acesso Único Já Utilizado!')
-        return { message: 'Acesso Bloqueado: Acesso Único Já Utilizado!'}
+        return { valid: false}
     }
 }
 
@@ -38,7 +38,7 @@ const verifyUnrestrictedAccess = (id,user_id,status) => {
     if(status === 'Irrestrito-Utilizado') records.createRecords(id, user_id, newData_entrada)
     connectMqtt.serverMqtt('open')
     console.log('Porta(Cancela) Aberta')
-    return { message: 'Porta(Cancela) Aberta' }
+    return { valid: true}
 
 }
 module.exports = {businessBuleQr}

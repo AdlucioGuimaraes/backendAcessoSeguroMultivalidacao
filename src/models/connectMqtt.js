@@ -20,7 +20,7 @@ const serverMqtt = (listening) =>{
 });
 
 const pubTopic = 'esp32/IoT'
-const subTopic = 'message/send'
+const subTopic = 'esp32/IoT'
 
 client.on('connect', () =>{
     console.log('Mqtt Connected!')

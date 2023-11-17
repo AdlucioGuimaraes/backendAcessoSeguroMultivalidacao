@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "19"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
@@ -20,6 +23,7 @@
     "jsqr": "^1.4.0",
     "mqtt": "^5.1.4",
     "mysql2": "^3.6.1",
+    "pg": "^8.11.3",
     "qrcode": "^1.5.3",
     "qrcode-reader": "^1.0.4",
     "qrcode-terminal": "^0.12.0",
