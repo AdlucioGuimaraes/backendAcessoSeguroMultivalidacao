@@ -4,6 +4,7 @@ const userController = require('./controllers/userController')
 const loginValidate = require('./controllers/loginController')
 const createCards = require('./controllers/cardsController')
 const recordCards = require('./controllers/recordController')
+const buttonControll = require('./controllers/buttonController')
 //Middlewares
 const userValidate = require('./middlewares/userValidate')
 const validateForEmail = require('./middlewares/verifyValidate')
@@ -27,6 +28,8 @@ router.post('users/logout', (request,response) =>{
     response.end()
 })
 
+//rota botão
+router.get('/button/:value',buttonControll.buttonOption)
 // Rotas Cards
 router.get('/generateQr/:id',validaQR.qrCode)
 router.get("/readerQr/:code",createCards.readQR);

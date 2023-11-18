@@ -4,7 +4,6 @@ const generateToken = require('./generatesToken')
 const cardModel = require('../models/cardsModels')
 const typeAcess = require('../useCases/useCasesUsers')
 
-
 const getAll = async () => {
     try {
         const [getAll] = await connection.execute('SELECT * FROM users');
