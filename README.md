@@ -12,3 +12,4 @@ If it is for npm
 ```
 npm run dev
 ```
+If there are no conflicting versions of dependencies and configurations, your API will run normally.
