@@ -11,7 +11,6 @@ const dataVisits = async (users, records) => {
 
     records.forEach((records) => {
     const userId = records.usuario_id;
-   
 
   if (!resultado[userId]) {
     resultado[userId] = {
